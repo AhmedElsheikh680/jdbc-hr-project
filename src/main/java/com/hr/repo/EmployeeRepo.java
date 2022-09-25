@@ -10,6 +10,8 @@ public interface EmployeeRepo {
 
     Employee findById(Long id);
 
+    List<Employee> findByNameAndSalary(String name, Double salary);
+
     List<Employee> findAll();
 
     int insert(Employee employee);

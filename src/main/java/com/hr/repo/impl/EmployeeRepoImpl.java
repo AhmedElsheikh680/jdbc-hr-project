@@ -4,12 +4,14 @@ import com.hr.mapper.EmployeeMapper;
 import com.hr.model.Employee;
 import com.hr.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@Qualifier("employeeRepoImpl")
 public class EmployeeRepoImpl implements EmployeeRepo {
 
     @Autowired
@@ -27,6 +29,11 @@ public class EmployeeRepoImpl implements EmployeeRepo {
 //                );
 
         return jdbcTemplate.queryForObject("select id, name, salary from employee where id=?", new Object[]{id}, new EmployeeMapper());
+    }
+
+    @Override
+    public List<Employee> findByNameAndSalary(String name, Double salary) {
+        return null;
     }
 
     @Override
