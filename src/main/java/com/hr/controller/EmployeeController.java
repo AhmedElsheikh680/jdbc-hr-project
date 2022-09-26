@@ -83,15 +83,16 @@ public class EmployeeController {
         return employeeService.findByEmpDeptName(empName, deptName);
     }
 
-    @GetMapping("/emp-salary")
-    public ResponseEntity<?> findBySalary(@RequestParam Double salary, @RequestParam String name) {
-        return ResponseEntity.ok(employeeService.findBySalary(salary, name));
-    }
+//    @GetMapping("/emp-salary")
+//    public ResponseEntity<?> findBySalary(@RequestParam Double salary, @RequestParam String name) {
+//        return ResponseEntity.ok(employeeService.findBySalary(salary, name));
+//    }
 
     @GetMapping("/filter")
-    public ResponseEntity<?> filter(@RequestParam String name, @RequestParam Double salary) {
+    public ResponseEntity<?> filter(@RequestParam String name, @RequestParam int pageNum,
+                                    @RequestParam int pageSize, @RequestParam boolean isAsc, @RequestParam String sortCol) {
 
-        return ResponseEntity.ok(employeeService.filter(name, salary));
+        return ResponseEntity.ok(employeeService.filter(name,pageNum, pageSize, isAsc, sortCol));
     }
 
     @GetMapping("/hr-statistic")

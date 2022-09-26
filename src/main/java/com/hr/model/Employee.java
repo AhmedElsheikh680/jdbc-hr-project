@@ -14,8 +14,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "employee")
-@NamedQuery(name = "Employee.findBySalary", query ="select emp from Employee emp where salary" +
-        " >= :salary AND name LIKE :name")
 public class Employee {
 
     @javax.persistence.Id

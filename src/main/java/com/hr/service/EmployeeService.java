@@ -5,6 +5,10 @@ import com.hr.config.HRStatisticProjection;
 import com.hr.model.Employee;
 import com.hr.repo.EmployeeDataJDBCRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,17 +30,22 @@ public class EmployeeService {
         return employeeDataJDBCRepo.countByNameContainingAndDepartmentNameContaining(empName, deptName);
     }
 
-    public List<Employee> findBySalary(Double salary, String name ) {
-        return employeeDataJDBCRepo.findBySalary(salary, name);
-    }
+//    public List<Employee> findBySalary(Double salary, String name ) {
+//        return employeeDataJDBCRepo.findBySalary(salary, name);
+//    }
 
     public HRStatisticProjection getHRStatistic() {
         return employeeDataJDBCRepo.getHRStatistic();
     }
 
 
-    public List<Employee> filter(String name, Double salary) {
-        return employeeDataJDBCRepo.filter(name, salary);
+    public Page<Employee> filter(String name, int pageNum, int pageSize, boolean isAsc, String sortCol) {
+        if (name.isEmpty() || name.isBlank() || name == null) {
+            name=null;
+        }
+
+        Pageable page = PageRequest.of(pageNum, pageSize, Sort.by(isAsc ? Sort.Direction.ASC : Sort.Direction.DESC, sortCol));
+        return employeeDataJDBCRepo.filter(name, page);
     }
 
 

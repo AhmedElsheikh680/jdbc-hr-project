@@ -3,6 +3,9 @@ package com.hr.repo;
 import com.hr.config.HRStatisticProjection;
 import com.hr.model.Employee;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +23,7 @@ public interface EmployeeDataJDBCRepo extends JpaRepository<Employee, Long> {
 
     Long countByNameContainingAndDepartmentNameContaining(String empName, String deptName);
 
-    List<Employee> findBySalary(Double salary, String name);
+//    List<Employee> findBySalary(Double salary, String name);
 
     @Query(value = "select (select count(*) from department) deptCount,"
             +"(select COUNT(*) from employee) empCount,"
@@ -29,8 +32,8 @@ public interface EmployeeDataJDBCRepo extends JpaRepository<Employee, Long> {
 
 
     // Using JPQL
-    @Query(value = "select emp from Employee emp where emp.name= :empName and emp.salary= :salary")
-    List<Employee> filter(@Param("empName") String name, Double salary);
+    @Query(value = "select emp from Employee emp where (:empName is null or emp.name LIKE :empName)")
+    Page<Employee> filter(@Param("empName") String name, Pageable pageable);
 
 
 
