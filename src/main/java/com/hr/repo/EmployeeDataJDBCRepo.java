@@ -3,6 +3,7 @@ package com.hr.repo;
 import com.hr.config.HRStatisticProjection;
 import com.hr.model.Employee;
 
+import com.hr.projection.EmployeeProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,8 +33,11 @@ public interface EmployeeDataJDBCRepo extends JpaRepository<Employee, Long> {
 
 
     // Using JPQL
-    @Query(value = "select emp from Employee emp where (:empName is null or emp.name LIKE :empName)")
-    Page<Employee> filter(@Param("empName") String name, Pageable pageable);
+//    @Query(value = "select emp from #{#entityName} emp where (:empName is null or emp.name LIKE :empName)")
+//    Page<Employee> filter(@Param("empName") String name, Pageable pageable);
+
+    @Query(value = "select emp from Employee emp where(:empName is null or emp.name like :empName)")
+    Page<EmployeeProjection> filter(@Param("empName") String name, Pageable pageable);
 
 
 

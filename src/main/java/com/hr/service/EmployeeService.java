@@ -3,6 +3,7 @@ package com.hr.service;
 
 import com.hr.config.HRStatisticProjection;
 import com.hr.model.Employee;
+import com.hr.projection.EmployeeProjection;
 import com.hr.repo.EmployeeDataJDBCRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class EmployeeService {
     }
 
 
-    public Page<Employee> filter(String name, int pageNum, int pageSize, boolean isAsc, String sortCol) {
+    public Page<EmployeeProjection> filter(String name, int pageNum, int pageSize, boolean isAsc, String sortCol) {
         if (name.isEmpty() || name.isBlank() || name == null) {
             name=null;
         }
